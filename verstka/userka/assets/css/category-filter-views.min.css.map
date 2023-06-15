@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,gBAAgB,AAAC,CACf,QAAQ,CAAE,QAAQ,CACnB,AAGD,AAAA,qBAAqB,AAAC,CACpB,QAAQ,CAAE,QAAQ,CACnB,AACD,AAAA,sBAAsB,AAAC,CACrB,OAAO,CAAE,KAAK,CACf",
+    "sources": [
+        "../scss/category-filter-views.scss"
+    ],
+    "names": [],
+    "file": "category-filter-views.min.css"
+}

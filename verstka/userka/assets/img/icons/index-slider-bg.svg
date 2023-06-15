@@ -1,0 +1,21 @@
+<svg width="1400" height="461" viewBox="0 0 1400 461" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_88_50" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1400" height="461">
+<rect width="1400" height="460.968" rx="10" fill="url(#paint0_radial_88_50)"/>
+</mask>
+<g mask="url(#mask0_88_50)">
+<rect x="738.506" y="222.999" width="130.433" height="529.343" rx="65.2166" transform="rotate(-32.8919 738.506 222.999)" fill="white" fill-opacity="0.1"/>
+<rect x="-24.4937" y="-91.167" width="130.433" height="529.343" rx="65.2166" transform="rotate(-32.8919 -24.4937 -91.167)" fill="white" fill-opacity="0.05"/>
+<rect x="982.72" y="-177.802" width="92.0998" height="529.343" rx="46.0499" transform="rotate(-32.8919 982.72 -177.802)" fill="white" fill-opacity="0.1"/>
+<rect x="753.58" y="369.889" width="30.8443" height="529.343" rx="15.4222" transform="rotate(-32.8919 753.58 369.889)" fill="white" fill-opacity="0.1"/>
+<rect x="71.3431" y="153.159" width="30.8443" height="529.343" rx="15.4222" transform="rotate(-32.8919 71.3431 153.159)" fill="white" fill-opacity="0.05"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_88_50" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(937.187 203.32) rotate(-0.229236) scale(462.817 878.417)">
+<stop stop-color="#7FB1ED"/>
+<stop offset="0.34664" stop-color="#437FC8"/>
+<stop offset="0.721647" stop-color="#1C508F" stop-opacity="0.95"/>
+<stop offset="0.877972" stop-color="#1C4E8A"/>
+<stop offset="1" stop-color="#1A467C"/>
+</radialGradient>
+</defs>
+</svg>
