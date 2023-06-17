@@ -29,12 +29,12 @@ class IndexController extends BaseUser
 		]); */
 
 		// Выпуск №128 | Вывод новостей
-		/* $news = $this->model->get('news', [
+		$newArticles = $this->model->get('articles', [
 			'where' => ['visible' => 1],
 			'order' => ['date'],
 			'order_direction' => ['DESC'],
-			'limit' => 5
-		]); */
+			'limit' => 3
+		]);
 
 		// Выпуск №126
 		// массив предложений (главная страница) +Выпуск №127

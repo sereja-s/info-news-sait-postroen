@@ -78,35 +78,28 @@ class Settings
 
 	// свойство с таблицами, названия которых будут показаны в боковом меню админки
 	private $projectTables = [
-		'sales' => ['name' => 'Акции'],
+		'articles' => ['name' => 'Статьи'],
 		'category' => ['name' => 'Категории'],
-		'filters' => ['name' => 'Фильтры'],
-		'goodsnew' => ['name' => 'Товары по категориям'],
-		'news' => ['name' => 'Новости'],
 		'information' => ['name' => 'Информация (меню)'],
 		'settings' => ['name' => 'Настройки (о сайте)'],
-		'advantages' => ['name' => 'Преимущества'],
 		'socials' => ['name' => 'Соц.сети'],
-		'delivery' => ['name' => 'Доставка'],
-		'payments' => ['name' => 'Виды оплаты'],
 	];
 
 	// свойство с таблицами в которых будет происходить поиск
 	private $searchProjectTables = [
+		'articles' => ['name' => 'Статьи'],
 		'category' => ['name' => 'Категории'],
-		'goodsnew' => ['name' => 'Товары по категориям'],
-		'news' => ['name' => 'Новости'],
 		'information' => ['name' => 'Информация (меню)'],
 	];
 
 	// свойство: массив шаблонов
 	private $templateArr = [
 		// массив вида: 'название шаблона' => массив с полями для которых должен быть подключен соответствующий шаблон
-		'text' => ['name', 'phone', 'email', 'alias', 'external_alias', 'sub_title', 'number_of_years', 'discount', 'price', 'login', 'password', 'sb_text', 'sb_title', 'sb_alias', 'working_time'],
+		'text' => ['name', 'phone', 'email', 'alias', 'external_alias', 'sub_title', 'number_of_years', 'discount', 'price', 'login', 'password', 'sb_text', 'sb_title', 'sb_alias', 'working_time', 'author'],
 		'textarea' => ['content', 'keywords', 'address', 'description', 'short_content'],
 		'radio' => ['visible', 'show_top_menu', 'hit', 'sale', 'new', 'hot'],
 		'select' => ['menu_position', 'parent_id'],
-		'img' => ['img', 'sb_img', 'promo_img'],
+		'img' => ['img', 'promo_img'],
 		'gallery_img' => ['gallery_img'],
 
 		'checkboxlist' => ['filters', 'category'], // указали, что хотим подключить фильтры и т.д. к их связанной таблице: 
@@ -136,7 +129,6 @@ class Settings
 		'show_top_menu' => ['Показывать в верхнем меню'],
 		'sub_title' => ['Подзаголовок'],
 		'short_content' => ['Краткое описание'],
-		'img_years' => ['Изображение количества лет на рынке'],
 		'number_of_years' => ['Текущий год'],
 		'hit' => ['Хит продаж'],
 		'sale' => ['Акция'],
@@ -147,7 +139,8 @@ class Settings
 		'parent_id' => ['Выбрать категорию', '(К чему относится?)'],
 		'promo_img' => ['Изображение для главной страницы'],
 		'login' => ['Логин'],
-		'password' => ['Пароль']
+		'password' => ['Пароль'],
+		'author' => ['Автор'],
 		//'filters' => ['Категории фильтров']
 	];
 

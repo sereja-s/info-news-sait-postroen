@@ -31,14 +31,10 @@ abstract class BaseUser extends \core\base\controller\BaseController
 	protected $menu;
 
 	/** 
-	 * свойство для корзины (Выпуск №140)
-	 */
-	protected $cart = [];
-
-	/** 
 	 * Выпуск №129 (св-во для хлебных крошек)
 	 */
 	protected $breadcrumbs;
+	protected $sidebar;
 
 	/** 
 	 * св-во в котором будем держать данные пользователя (Выпуск №145)
@@ -55,10 +51,6 @@ abstract class BaseUser extends \core\base\controller\BaseController
 	 */
 	protected $category;
 
-	/** 
-	 * категории (массив со всеми уровнями вложенности)
-	 */
-	protected $arrCategory;
 
 
 	protected function inputData()
@@ -77,55 +69,32 @@ abstract class BaseUser extends \core\base\controller\BaseController
 		// Выпуск №122- Пользовательская часть | Вывод данных в хедер сайта
 		// (св-во: $this->set будет доступно везде (без рендеринга), где будет вызываться header и footer, т.к. это св-во
 		// любого обхекта класса, который наследует: BaseUser и поэтому его никуда передавать не надо)
-		/* $this->set = $this->model->get('settings', [
+		$this->set = $this->model->get('settings', [
 			'order' => ['id'],
 			'limit' => 1
-		]); */
+		]);
 
 		// укажежем, что если что то пришло в свойство: $this->set, то сохраним в нём только нулевой элемент массива, который пришёл (первый по очереди)
 		$this->set && $this->set = $this->set[0];
 
 
-		// Выпуск №142
-		// получим данные для корзины (-Выпуск №147)
-		if (!$this->isAjax()/* && !$this->isPost() */) {
-
-			$this->getCartData();
-		}
-
-			// получим в св-во: $this->menu, в ячейку: ['catalog'], то что хранится в соответствующей таблице БД
-			/* $this->menu['catalog'] = $this->model->get('catalog', [
+		// получим в св-во: $this->menu, в ячейку: ['category'], то что хранится в соответствующей таблице БД
+		$this->menu['category'] = $this->model->get('category', [
 			'where' => ['visible' => 1, 'parent_id' => null],
 			'order' => ['menu_position']
-		]); */
+		]);
 
-			// получим в св-во: $this->menu, в ячейку: ['information'], то что хранится в соответствующей таблице БД
-			/* $this->menu['information'] = $this->model->get('information', [
+		// получим в св-во: $this->menu, в ячейку: ['information'], то что хранится в соответствующей таблице БД
+		$this->menu['information'] = $this->model->get('information', [
 			'where' => ['visible' => 1, 'show_top_menu' => 1],
 			'order' => ['menu_position']
-		]); */
-
-			//-------------------------------------------------------------------------------------------------------------//
-
-			// выберем всё из таблицы категорий в массив в переменной:
-			/* $category = $this->model->get('category', [
-			// предварительно нужно отсортировать все категории относительно родителей по порядку (при этом вначале пришли 
-			// все родители, потом последовательно пришли все потомки(подкатегории) и затем подкатегории подкатегорий) 
-			'order' => ['id', 'parent_id']
 		]);
-		$this->category = $category;
 
-		// на вход 2-ой параметр подавать не обязательно, т.к. по умолчанию он зависан равным null
-		$this->arrCategory = $this->recurse($category); */
-
-			//------------------------------------------------------------------------------------------------------------//
-
-
-			// получим в св-во: $this->socials, то что хранится в соответствующей таблице БД
-			/* $this->socials = $this->model->get('socials', [
+		// получим в св-во: $this->socials, то что хранится в соответствующей таблице БД
+		$this->socials = $this->model->get('socials', [
 			'where' => ['visible' => 1],
 			'order' => ['menu_position']
-		]) */;
+		]);
 	}
 
 	protected function outputData()
@@ -138,6 +107,8 @@ abstract class BaseUser extends \core\base\controller\BaseController
 
 		// +Выпуск №129 (добавили в шаблон путь к файлу с хлебными крошками)
 		$this->breadcrumbs = $this->render(TEMPLATE . 'include/breadcrumbs');
+		$this->sidebar = $this->render(TEMPLATE . 'include/sidebar');
+
 
 		if (!$this->content) {
 
@@ -472,305 +443,5 @@ abstract class BaseUser extends \core\base\controller\BaseController
 		!$arr && $arr = $_SESSION['res'] ?? [];
 
 		return $arr[$key] ?? ($this->$property[$key] ?? '');
-	}
-
-
-	/** 
-	 * Базовый метод добавления в корзину (Выпуск №140)
-	 */
-	protected function addToCart($id, $qty)
-	{
-		$id = $this->clearNum($id);
-
-		$qty = $this->clearNum($qty) ?: 1;
-
-		if (!$id) {
-
-			return ['success' => 0, 'message' => 'Отсутствует идентификатор товара'];
-		}
-
-		// получим товар (подтверждение, что такой товар существует)
-		$data = $this->model->get('goodsnew', [
-			'where' => ['id' => $id, 'visible' => 1],
-			'limit' => 1
-		]);
-
-		if (!$data) {
-
-			return ['success' => 0, 'message' => 'Отсутствует товар для добавления в корзину'];
-		}
-
-		// заберём корзину в переменную, чтобы дальше с ней работать (в одной единой переменной):
-		// (при этом обращаемся к методу по ссылке)
-		$cart = &$this->getCart();
-
-		// в корзине хранится идентификатор товара и количество
-		$cart[$id] = $qty;
-
-		// после того как добавили товар в корзину, надо проUPDATE корзину, в случае если она лежит в куках:
-		$this->updateCart();
-
-		// +Выпуск №141
-		// на вход метода подаём флаг: $cartChanged = true, т.к. в корзине произошли изменения и их необходимо пересчитать
-		$res = $this->getCartData(true);
-
-		// сформируем по условию: $res['current'] - текущий элемент (для удобства работы в JS)
-		if ($res && !empty($res['goods'][$id])) {
-
-			$res['current'] = $res['goods'][$id];
-		}
-
-		return $res;
-	}
-
-	/** 
-	 * Метод формирует полноценные данные о нашей корзине (Выпуск №140)
-	 * 
-	 * на вход: флаг по умолчанию $cartChanged = false т.е. изменений в корзине не произошло
-	 */
-	protected function getCartData($cartChanged = false)
-	{
-		// если корзина получена(сормировано свойство: $this->cart)
-		if (!empty($this->cart) && !$cartChanged) {
-
-			// вернём корзину
-			return $this->cart;
-		}
-
-		// получим корзину (+Выпуск №141)
-		$cart = &$this->getCart();
-
-		// если корзина пуста:
-		if (empty($cart)) {
-
-			$this->clearCart();
-
-			return false;
-		}
-
-		// в переменную сохраняем товары 
-		// (в конце укажем диструкцию (фильтры не нужны))
-		$goods = $this->model->getGoods([
-			'where' => ['id' => array_keys($cart), 'visible' => 1],
-			'operand' => ['IN', '=']
-		], ...[false, false]);
-
-		if (empty($goods)) {
-
-			$this->clearCart();
-
-			return false;
-		}
-
-
-		// если в корзине($cart) есть такие идентификаторы которых нет в $goods, то какой-то товар уже отключен и надо 
-		// переUPDATE корзину, иначе оставляем как есть По умолчанию установим флаг:
-		$cartChanged = false;
-
-		foreach ($cart as $id => $qty) {
-
-			if (empty($goods[$id])) {
-
-				unset($cart[$id]);
-
-				$cartChanged = true;
-
-				continue;
-			}
-
-			$this->cart['goods'][$id] = $goods[$id];
-
-			// переложим в корзину количество:
-			$this->cart['goods'][$id]['qty'] = $qty;
-		}
-
-		// если нужно UPDATE корзину (т.е. $cartChanged = true):
-		if ($cartChanged) {
-
-			$this->updateCart();
-		}
-
-		return $this->totalSum();
-	}
-
-	/** 
-	 * Метод формирует общую сумму заказа (Выпуск №141)
-	 */
-	protected function totalSum()
-	{
-
-		if (empty($this->cart['goods'])) {
-
-			$this->clearCart();
-
-			return null;
-		}
-
-		// если в cart['goods'] не пусто, сформируем в корзине три ячейки дополнения к товару и установим им значение ноль:
-		$this->cart['total_sum'] = $this->cart['total_old_sum'] = $this->cart['total_qty'] = 0;
-
-
-		foreach ($this->cart['goods'] as $item) {
-
-			$this->cart['total_qty'] += $item['qty'];
-
-			$this->cart['total_sum'] += round($item['qty'] * $item['price'], 2);
-
-			// Выпуск №143 | Пользовательская часть | Корзина товаров | ч 1
-			$this->cart['total_old_sum'] += round($item['qty'] * ($item['old_price'] ?? $item['price']), 2);
-
-			// Выпуск -№143
-			/* if (!empty($item['old_price'])) {
-				$this->cart['total_old_sum'] += round($item['qty'] * $item['old_price'], 2);
-			} */
-		}
-
-		$this->cart['total_discount'] = ($this->cart['total_old_sum'] - $this->cart['total_sum']);
-
-		// Выпуск №143
-		if ($this->cart['total_sum'] === $this->cart['total_old_sum']) {
-
-			// разрегистрируем ячейку (т.е. не будем выводить перечёркнутую сумму)
-			unset($this->cart['total_old_sum']);
-		}
-
-		return $this->cart;
-	}
-
-	/** 
-	 * Метод обновит корзину в случае если она лежит в куках (Выпуск №140)
-	 */
-	protected function updateCart()
-	{
-		// получим корзину
-		$cart = &$this->getCart();
-
-		/* if (empty($cart)) {
-			return $this->clearCart();
-		} */
-
-		if (defined('CART') && strtolower(CART) === 'cookie') {
-
-			// поставим новую куку пользователю изменив при этом значение его корзины
-			setcookie('cart', json_encode($cart), time() + 3600 * 24 * 4, PATH);
-		}
-
-		return true;
-	}
-
-	/** 
-	 * Метод чистит корзину (Выпуск №141)
-	 */
-	public function clearCart()
-	{
-
-		unset($_COOKIE['cart'], $_SESSION['cart']);
-
-		if (defined('CART') && strtolower(CART) === 'cookie') {
-
-			// удалим куку (ставим время жизни куки больше чем текущая метка времени):
-			setcookie('cart', '', 1, PATH);
-		}
-
-		$this->cart = [];
-
-		return null;
-	}
-
-	/**
-	 * Метод удаления данных из корзины (Выпуск №144)
-	 */
-	protected function deleteCartData($id)
-	{
-		$id = $this->clearNum($id);
-
-		if ($id) {
-
-			$cart = &$this->getCart();
-
-			unset($cart[$id]);
-
-			$this->updateCart();
-
-			// вызываем метод с обязательным пересчётом (передаём true)
-			$this->getCartData(true);
-		}
-	}
-
-	// нам будет удобно работать, получив корзину единоразово (Выпуск №140)
-	// (чтобы понять какой у нас массив будет, можно хранить ссылку на суперглобальные массивы, но только 
-	// через передачу функции по ссылке):
-	/** 
-	 * Метод вернёт корзину по ссылке
-	 */
-	protected function &getCart()
-	{
-		if (!defined('CART') || strtolower(CART) !== 'cookie') {
-
-			// то значит работаем с сессией
-
-			// сделаем дополнительную проверку:
-			if (!isset($_SESSION['cart'])) {
-
-				$_SESSION['cart'] = [];
-			}
-
-			return $_SESSION['cart'];
-		} else {
-
-			if (!isset($_COOKIE['cart'])) {
-
-				$_COOKIE['cart'] = [];
-
-				// если есть $_COOKIE['cart'], то в ней может быть или массив, или строка
-				// сделаем соответствующую проверку
-			} else {
-
-				$_COOKIE['cart'] = is_string($_COOKIE['cart']) ? json_decode($_COOKIE['cart'], true) : $_COOKIE['cart'];
-			}
-
-			return $_COOKIE['cart'];
-		}
-	}
-
-	//----------------------------------------------------------------------------------------------------------------//
-
-	/** 
-	 * Метод (рекурсивный) для работы с таблицей категорий с несколькими вложенностями подкатегорий
-	 * на вход: 1- массив, который будем обходить; 2- ключ (родительский идентификатор, т.е. указатель в какой элемент собирать текущие элемеенты)
-	 * 
-	 * Примечание: метод работает только с изначально структурированными данными и позволяет получить выборку, удобную 
-	 * т.е. отсортированную для дальнешего применения этих данных
-	 */
-	public function recurse($arr, $parent_id = null)
-	{
-		// определим результирующий массив
-		$res_arr = [];
-
-		foreach ($arr as $key => $item) {
-
-			if ($item['parent_id'] === $parent_id) {
-
-				// в начале собираем в массив элементы у которых в ячейке: parent_id установлено значение: null				
-				$res_arr[$item['id']] = $item;
-
-				// разрегистрируем(удалим) ячейку массива с которой уже отработали (чтобы на новых итерациях её опять не обходить):
-				unset($arr[$key]);
-
-				// затем когда условие не выполнится (закончатся все элементы с parent_id = null) переходим в часть else
-			} else {
-
-				// проверим существует ли уже ячейка родителя в результирующем массиве
-				if (isset($res_arr[$item['parent_id']])) {
-
-					// ячейку положим результат работы этого же метода, но 2-ым параметром здесь подаём то что хранится в  ячейке: $item['parent_id']
-					// таким образом для данного родителя мы соберём все подкатегории, являющиеся дочерними ей
-					$res_arr[$item['parent_id']]['sub'] = $this->recurse($arr, $item['parent_id']);
-				}
-			}
-		}
-
-		// обязательно надо что то вернуть (это и будет терминальное условие выхода из рекурсии)
-		return $res_arr;
 	}
 }

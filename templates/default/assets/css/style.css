@@ -91,7 +91,7 @@ header ul li a {
 
 @media(max-width: 370px) {
 	header ul li a {
-		font-size: .9rem;
+		font-size: .85rem;
 		padding: 10px;
 	}
 }
@@ -192,22 +192,22 @@ header ul li ul li a {
 	margin-bottom: 30px;
 }
 
-.main-content .post_text {
+.main-content .post-text {
 	background: #ffffff;
-	padding: 8px;
+	padding: 12px;
 	border-radius: 5px;
 }
 
-.main-content .post_text h3 {
+.main-content .post-text h3 {
 	margin: 14px 0;
 }
 
-.main-content .post_text h3 a:hover {
+.main-content .post-text h3 a:hover {
 	text-decoration: underline;
 	color: #5c5b5b;
 }
 
-.main-content .post_text i {
+.main-content .post-text i {
 	margin: 0px 14px 14px 5px;
 }
 
@@ -363,53 +363,67 @@ header ul li ul li a {
 }
 
 /*
-    SINGLE_POST
+    single-post
  */
-.single_post {
+.single-post {
 	margin-bottom: 30px;
 }
 
-.single_post .info {
+/* .single-post .info {
 	margin: 20px 0;
 }
 
-.single_post .info i {
+.single-post .info i {
 	display: inline-block;
 	margin-right: 20px;
+} */
+
+.single-post a {
+	color: #07bb1f;
 }
 
-.single_post a {
+.single-post a:hover {
 	text-decoration: underline;
 }
 
-.single_post a:hover {
-	text-decoration: none;
-	color: #008489;
+.single-post-text {
+	padding-top: 10px;
+}
+
+.single-post-text * {
+	padding: 7px;
 }
 
 /*
 FORMS
  */
-.reg_form h2 {
-	text-align: center;
-	margin: 30px 0;
+.reg-form {
+	padding-bottom: 15px;
+	flex: 1 0 auto;
 }
 
-.reg_form input {
+.reg-form h1 {
+	text-align: center;
+	margin: 30px 0 5px 0;
+	font-size: 24px;
+}
+
+.reg-form input {
 	height: 3.3rem;
 }
 
-.reg_form a {
+.reg-form a {
 	font-size: 1em;
 	transition: all .3s;
-	color: #5c5b5b;
-	text-decoration: underline;
+	color: #07bb1f;
 	margin-left: 60px;
 }
 
-.reg_form a:hover {
-	margin-left: 55px;
+.reg-form a:hover {
+	text-decoration: underline;
+	margin-left: 57px;
 	transition: all .3s;
+	color: inherit;
 }
 
 /*

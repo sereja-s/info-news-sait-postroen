@@ -1,50 +1,33 @@
 <!-- блок main-->
 <div class="container">
+
 	<div class="content row">
 		<!-- Main Content -->
 		<div class="main-content col-md-9 col-12">
-			<h2><?php echo $post['title']; ?></h2>
 
-			<div class="single_post row">
+			<h2>Создание сайтов в Донецке</h2>
+
+			<div class="single-post row">
 				<div class="img col-12">
-					<img src="" alt="<?= $post['title'] ?>" class="img-thumbnail">
+					<a href="#"><img src="<?= PATH . TEMPLATE ?>assets/img/2.jpg" alt="" class="img-thumbnail"></a>
 				</div>
-				<div class="info">
-					<i class="far fa-user"> <?= $post['username']; ?></i>
-					<i class="far fa-calendar"> <?= $post['created_date']; ?></i>
+				<div class="single-post-text col-12"">
+					<i class=" far fa-user">&nbsp;Admin</i>
+					<i class="far fa-calendar">&nbsp;15.06.2023</i>
+					<p>
+						Создание сайтов в Донецке в <a href="https://saitpostroen.ru/">САЙТ ПОСТРОЕН</a> увлекательный процесс в котором участвуют как программист, так и заказчик Сначала определяются с назначением сайта, что бы наполнить его сответствующим функционалом Заказчик объясняет каким он хочет видеть свой сайт, вместе с программистом его оптимизируют
+					</p>
+					<p>
+						Дальше ещё ннтересней. Содаётся дизайн сайта, дорабатывается, утверждается и затем подключается система управления контентом сайта. Закзчик регистрируется на хостинге для размещения там своего сайта. Покупается доменное имя сайта. Готовый сайт загружается на хостинг и становится видимым в интернете
+					</p>
 				</div>
-				<div class="single_post_text col-12">
-					<?= $post['content']; ?>
-				</div>
-
-				<!-- HTML БЛОК С КОММЕНТАРИЯМИ  --->
-				<?php include("app/include/comments.php"); ?>
-
 			</div>
 
 		</div>
+
 		<!-- sidebar Content -->
-		<div class="sidebar col-md-3 col-12">
+		<?= $this->sidebar ?>
 
-			<div class="section search">
-				<h3>Поиск</h3>
-				<form action="/" method="post">
-					<input type="text" name="search-term" class="text-input" placeholder="Введите искомое слово...">
-				</form>
-			</div>
-
-
-			<div class="section topics">
-				<h3>Категории</h3>
-				<ul>
-					<?php foreach ($topics as $key => $topic) : ?>
-						<li>
-							<a href="#"><?= $topic['name']; ?></a>
-						</li>
-					<?php endforeach; ?>
-				</ul>
-			</div>
-
-		</div>
 	</div>
+
 </div>

@@ -1,7 +1,7 @@
 <!-- FORM -->
-<div class="container reg_form">
+<div class="container reg-form">
 	<form action="reg.php" method="post" class="row justify-content-center">
-		<h2>Форма регистрации</h2>
+		<h1>Форма регистрации</h1>
 		<div class="mb-3 col-12 col-md-4 err">
 
 			<?php if (!empty($errMsg)) : ?>
@@ -23,26 +23,38 @@
 			<label for="formGroupExampleInput" class="form-label">Ваш логин</label>
 			<input name="login" value="<?= $login ?>" type="text" class="form-control" id="formGroupExampleInput" placeholder="введите ваш логин...">
 		</div>
+
+		<!-- переход следующего блока на новую строку -->
 		<div class="w-100"></div>
+
 		<div class="mb-3 col-12 col-md-4">
 			<label for="exampleInputEmail1" class="form-label">Email</label>
 			<input name="mail" value="<?= $email ?>" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="введите ваш email...">
 			<div id="emailHelp" class="form-text">Ваш email адрес не будет использован для спама!</div>
 		</div>
+
+		<!-- переход следующего блока на новую строку -->
 		<div class="w-100"></div>
+
 		<div class="mb-3 col-12 col-md-4">
 			<label for="exampleInputPassword1" class="form-label">Пароль</label>
 			<input name="pass-first" type="password" class="form-control" id="exampleInputPassword1" placeholder="введите ваш пароль...">
 		</div>
+
+		<!-- переход следующего блока на новую строку -->
 		<div class="w-100"></div>
+
 		<div class="mb-3 col-12 col-md-4">
 			<label for="exampleInputPassword2" class="form-label">Повторите пароль</label>
 			<input name="pass-second" type="password" class="form-control" id="exampleInputPassword2" placeholder="повторите ваш пароль...">
 		</div>
+
+		<!-- переход следующего блока на новую строку -->
 		<div class="w-100"></div>
+
 		<div class="mb-3 col-12 col-md-4">
 			<button type="submit" class="btn btn-secondary" name="button-reg">Регистрация</button>
-			<a href="#">Войти</a>
+			<a href="#"><span style="font-weight: 900;">Войти</span></a>
 		</div>
 	</form>
 </div>

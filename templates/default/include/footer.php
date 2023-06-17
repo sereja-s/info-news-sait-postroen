@@ -5,38 +5,50 @@
 	<div class="footer-content container">
 		<div class="row">
 			<div class="footer-section about col-md-4 col-12">
-				<h3 class="logo-text">Мой блог</h3>
+				<h3 class="logo-text"><?= $this->set['name'] ?></h3>
 				<p>
-					Это блог сделанный с целью обучения
+					<?= $this->set['short_content'] ?>
 				</p>
 				<div class="contact">
-					<span><i class="fas fa-phone"></i>&nbsp;+7(949)123-45-67</span>
-					<span><i class="fas fa-envelope"></i>&nbsp;SaitPostroen@yandex.ru</span>
+					<span><a href="tel:<?= preg_replace('/[^+\d]/', '', $this->set['phone']) ?>"><i class="fas fa-phone"></i>&nbsp;<?= $this->set['phone'] ?></a></span>
+					<span><a href="mailto:<?= $this->set['email'] ?>"><i class="fas fa-envelope"></i>&nbsp;<?= $this->set['email'] ?></a></span>
 				</div>
-				<div class="socials">
-					<a href="#"><i class="fab fa-facebook"></i></a>
-					<a href="#"><i class="fab fa-instagram"></i></a>
-					<a href="#"><i class="fab fa-twitter"></i></a>
-					<a href="#"><i class="fab fa-youtube"></i></a>
-				</div>
+
+				<?php if (!empty($this->socials)) : ?>
+
+					<div class="socials-icons">
+
+						<?php foreach ($this->socials as $item) : ?>
+
+
+							<a href="<?= $this->alias($item['external_alias']) ?>"><img src="<?= $this->img($item['img']) ?>" alt="<?= $item['name'] ?>"></a>
+
+
+						<?php endforeach; ?>
+
+					</div>
+
+				<?php endif; ?>
+
 			</div>
 
 			<div class="footer-section links col-md-4 col-12">
 				<h3>Разделы сайта</h3>
 				<br>
 				<ul>
-					<a href="/">
-						<li>Главная</li>
-					</a>
-					<a href="#">
-						<li>О нас</li>
-					</a>
-					<a href="#">
-						<li>Услуги</li>
-					</a>
-					<a href="#">
-						<li>Все статьи</li>
-					</a>
+					<li><a href="<?= $this->alias() ?>">Главная</a> </li>
+
+					<?php if (!empty($this->menu['information'])) : ?>
+
+						<?php foreach ($this->menu['information'] as $item) : ?>
+
+							<li><a href="<?= $this->alias(['information' => $item['alias']]) ?>"><?= $item['name'] ?></a></li>
+
+						<?php endforeach; ?>
+
+					<?php endif; ?>
+
+					<li><a href="<?= $this->alias('category') ?>">Статьи</a> </li>
 				</ul>
 			</div>
 
@@ -57,8 +69,17 @@
 	<div class="footer-bottom"><span>сделано в </span><a href="https://saitpostroen.ru/" style="color: coral;">sait_postroen</a></div>
 </div>
 
-
 <?php $this->getScripts() ?>
+
+<!-- Выпуск №147 -->
+<!-- Выпуск №148 | Пользовательская часть | показ уведомлений пользователю -->
+<?php if (!empty($_SESSION['res']['answer'])) : ?>
+
+	<div class="wq-message__wrap"><?= $_SESSION['res']['answer'] ?></div>
+
+<?php endif; ?>
+
+<?php unset($_SESSION['res']); ?>
 
 </body>
 

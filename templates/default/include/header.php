@@ -8,7 +8,7 @@
 
 	<?php $this->getStyles() ?>
 
-	<title>САЙТ ПОСТРОЕН (новости)</title>
+	<title><?= $this->set['name'] ?> (новости)</title>
 </head>
 
 <body>
@@ -20,16 +20,26 @@
 			<div class="row">
 
 				<div class="col-4">
-					<a href="/"><img src="<?= PATH . TEMPLATE ?>assets/img/сайт-построен-min.png" alt="сайт построен" class="img-thumbnail" style="width: 100px; background-color: transparent; border: none"></a>
+					<a href="<?= $this->alias() ?>"><img src="<?= $this->img($this->set['img']) ?>" alt="<?= $this->set['name'] ?>" class="img-thumbnail" style="width: 100px; background-color: transparent; border: none"></a>
 				</div>
 
 				<nav class="col-8">
 					<ul>
-						<li><a href="/">Главная</a> </li>
-						<li><a href="#">О нас</a> </li>
-						<li><a href="#">Услуги</a> </li>
+						<li><a href="<?= $this->alias() ?>">Главная</a> </li>
 
-						<li>
+						<?php if (!empty($this->menu['information'])) : ?>
+
+							<?php foreach ($this->menu['information'] as $item) : ?>
+
+								<li><a href="<?= $this->alias(['information' => $item['alias']]) ?>"><?= $item['name'] ?></a></li>
+
+							<?php endforeach; ?>
+
+						<?php endif; ?>
+
+						<li><a href="<?= $this->alias('category') ?>">Статьи</a> </li>
+
+						<!-- <li>
 							<?php if (isset($_SESSION['id'])) : ?>
 
 								<a href="#">
@@ -55,7 +65,7 @@
 
 							<?php endif; ?>
 
-						</li>
+						</li> -->
 					</ul>
 				</nav>
 
