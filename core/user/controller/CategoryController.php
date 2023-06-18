@@ -24,8 +24,34 @@ class CategoryController extends BaseUser
 
 			if (!$data) {
 
-				throw new RouteException('Не найдены записи в таблице catalog по ссылке ', $this->parameters['alias']);
+				throw new RouteException('Не найдены записи в таблице category по ссылке ', $this->parameters['alias']);
 			}
+
+			$data = $data[0];
 		}
+
+		// сформируем инструкцию для статей
+		$where = ['visible' => 1];
+
+		if ($data) {
+
+			// Выпуск №144
+			$where['parent_id'] = $data['id'];
+		} else {
+
+			$data['name'] = 'Все статьи';
+		}
+
+
+		// Получим товары (с их фильтрами и ценами):
+
+		$articles = $this->model->get('articles', [
+			'where' => $where,
+			'operand' => ['='],
+			'order' => ['datetime'],
+		]);
+
+
+		return compact('data', 'articles');
 	}
 }
