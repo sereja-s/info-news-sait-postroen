@@ -7,8 +7,6 @@ namespace core\user\controller;
  */
 class IndexController extends BaseUser
 {
-	protected $name;
-
 	protected function inputData()
 	{
 
@@ -31,51 +29,22 @@ class IndexController extends BaseUser
 		// Выпуск №128 | Вывод новостей
 		$newArticles = $this->model->get('articles', [
 			'where' => ['visible' => 1],
-			'order' => ['date'],
+			'order' => ['datetime'],
 			'order_direction' => ['DESC'],
 			'limit' => 3
 		]);
 
-		// Выпуск №126
-		// массив предложений (главная страница) +Выпуск №127
-		$arrHits = [
+		$articles = [];
 
-			'hit' => [
-				'name' => 'Хиты продаж',
-				'icon' => '<span class="short-item__present">Хит</span>'
-			],
-			'hot' => [
-				'name' => 'Горячие предложения',
-				'icon' => ''
-			],
-			/* 'sale' => [
-				'name' => 'Распродажа',
-				'icon' => '%'
-			], */
-			'new' => [
-				'name' => 'Новинки',
-				'icon' => '<span class="short-item__new">Новинка</span>'
-			],
+		$articles['hit'] = $this->model->get('articles', [
+			'where' => ['hit' => 1, 'visible' => 1],
+			'order' => ['datetime'],
+			'order_direction' => ['DESC'],
+			'limit' => 5
+		]);
 
-		];
-
-		$goods = [];
-
-		// получим товары (с учётом их типа)
-		/* foreach ($arrHits as $type => $item) {
-
-			$goods[$type] = $this->model->getGoods([
-				'where' => [$type => 1, 'visible' => 1], // +Выпуск №127
-				'limit' => 8 // выводим не более 8 товаров у которых включены соответствующие предложения
-			]);
-		} */
-
-		// Выпуск №125
-		//$goods = $this->model->getGoods();		
-
-		//$goods = $this->model->getGoods(['where' => ['parent_id' => 1]]);		
 
 		// собираем переменные в массив и возвращаем в шаблон, что бы они стали доступными при выводе
-		return compact('sales', 'arrHits', 'goods', 'advantages', 'news');
+		return compact('articles', 'newArticles');
 	}
 }

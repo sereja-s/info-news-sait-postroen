@@ -6,7 +6,7 @@ use core\admin\model\Model;
 use core\base\controller\BaseController;
 
 
-class SingleController extends BaseUser
+class ArticleController extends BaseUser
 {
 
 	protected function inputData()
