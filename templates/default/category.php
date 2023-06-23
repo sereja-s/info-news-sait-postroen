@@ -12,6 +12,19 @@
 					$this->showGoods($item, [], 'articlesItem');
 				} ?>
 
+				<?php if (!empty($pages)) : ?>
+
+					<nav aria-label="Page navigation example">
+
+						<ul class="pagination justify-content-center">
+
+							<?php $this->pagination($pages) ?>
+
+						</ul>
+
+					</nav>
+
+				<?php endif; ?>
 
 			</div>
 

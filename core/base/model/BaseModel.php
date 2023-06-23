@@ -499,12 +499,6 @@ abstract class BaseModel extends BaseModelMethods
 	}
 
 
-	/* public function test()
-	{
-		$a = 1;
-	} */
-
-
 	/** 
 	 * Метод для генерации UNION запросов и их выполнения (Выпуск №112- ORM builder UNION запросов ч.2)
 	 */

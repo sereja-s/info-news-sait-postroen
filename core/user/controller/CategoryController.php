@@ -49,9 +49,16 @@ class CategoryController extends BaseUser
 			'where' => $where,
 			'operand' => ['='],
 			'order' => ['datetime'],
+			'pagination' => [
+				'qty' => QTY,
+				'page' => $this->clearNum($_GET['page'] ?? 1) ?: 1
+			]
 		]);
 
+		// Выпуск №136
+		$pages = $this->model->getPagination();
 
-		return compact('data', 'articles');
+
+		return compact('data', 'articles', 'pages');
 	}
 }

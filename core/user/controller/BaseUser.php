@@ -358,19 +358,19 @@ abstract class BaseUser extends \core\base\controller\BaseController
 		if (!empty($pages['first'])) {
 
 			echo <<<HEREDOC
-			<a href="$firstPageStr" class="catalog-section-pagination__item">
-									<< </a>
+			<li class="page-item"><a class="page-link" href="$firstPageStr">В начало</a></li>
+			
 			HEREDOC;
 		}
 
 
-		if (!empty($pages['back'])) {
+		/* 		if (!empty($pages['back'])) {
 
 			echo <<<HEREDOC
 			<a href="$backPageStr" class="catalog-section-pagination__item">
 									< </a>
 			HEREDOC;
-		}
+		} */
 
 
 		if (!empty($pages['previous'])) {
@@ -380,9 +380,8 @@ abstract class BaseUser extends \core\base\controller\BaseController
 				$href = $item === 1 ? $basePageStr : $str . $item;
 
 				echo <<<HEREDOC
-				<a href="$href" class="catalog-section-pagination__item">
-									$item
-								</a>
+				<li class="page-item"><a class="page-link" href="$href">$item</a></li>
+			
 				HEREDOC;
 			}
 		}
@@ -391,8 +390,8 @@ abstract class BaseUser extends \core\base\controller\BaseController
 		if (!empty($pages['current'])) {
 
 			echo <<<HEREDOC
-			<a href="" class="catalog-section-pagination__item pagination-current">
-									{$pages['current']} </a>
+			<li class="page-item active" aria-current="page"><a class="page-link" href="#">{$pages['current']}</a></li>
+			
 			HEREDOC;
 		}
 
@@ -404,15 +403,14 @@ abstract class BaseUser extends \core\base\controller\BaseController
 				$href = $str . $item;
 
 				echo <<<HEREDOC
-				<a href="$href" class="catalog-section-pagination__item">
-									$item
-								</a>
+				<li class="page-item"><a class="page-link" href="$href">$item</a></li>
+				
 				HEREDOC;
 			}
 		}
 
 
-		if (!empty($pages['forward'])) {
+		/* 		if (!empty($pages['forward'])) {
 
 			$href = $str . $pages['forward'];
 
@@ -421,14 +419,14 @@ abstract class BaseUser extends \core\base\controller\BaseController
 									> </a>
 			HEREDOC;
 		}
-
+ */
 		if (!empty($pages['last'])) {
 
 			$href = $str . $pages['last'];
 
 			echo <<<HEREDOC
-			<a href="$href" class="catalog-section-pagination__item">
-									>> </a>
+			<li class="page-item"><a class="page-link" href="$href">В конец</a></li>
+			
 			HEREDOC;
 		}
 	}

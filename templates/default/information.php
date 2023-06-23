@@ -1,4 +1,4 @@
-<div class="container" style="padding: 30px 0 20px 0">
+<div class="container" style="padding: 30px 5px 20px 10px">
 
 	<?php if (!empty($this->menu['information'])) : ?>
 

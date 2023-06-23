@@ -8,8 +8,7 @@ namespace core\base\controller;
  * 
  * Методы: protected function clearStr(); protected function clearNum(); protected function isPost(); 
  *         protected function isAjax(); protected function redirect(); protected function getStyles(); 
- *         protected function getScripts(); protected function writeLog(); protected function getController(); protected function addSessionData()
- *         protected function dateFormat()
+ *         protected function getScripts(); protected function writeLog(); protected function getController(); protected *			  function addSessionData(); protected function dateFormat()
  */
 trait BaseMethods
 {
